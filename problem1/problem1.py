@@ -10,7 +10,6 @@ the list is circular.
 
 - count number of 0s.
 """
-from itertools import cycle
 
 if __name__ == "__main__":
     codes : list = []
@@ -19,9 +18,41 @@ if __name__ == "__main__":
 
 
     instructions : list = []
+    pos = len(codes)//2
+    password = 0
+
     with open('input.txt', 'r') as file:
         for line in file:
             instructions.append(line.strip())
+
+    for ins in instructions:
+        dir_char = ins[0].upper() #direction of jump
+        k = int(ins[1:]) #size of jump
+        if k < 0:
+            k = abs(k)
+            dir_char = 'L' if dir_char == 'R' else 'R'
+
+        k %= len(codes) # reduce large steps modulo n for circular movement
+
+        if dir_char == "R":
+            pos += k
+        elif dir_char == "L":
+            pos -= k 
+        else:
+            continue
+
+        pos %= len(codes) # wrap-around
+        
+        if codes[pos] == 0:
+            password += 1
+
+
+    print (password)
+
+
+
+
+
 
 
 
