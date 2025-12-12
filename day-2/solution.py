@@ -18,11 +18,28 @@ def iter_nums(ranges):
     for start , end in ranges:
         for n in range(start, end+1):
             yield n 
+
+def is_invalid(n: int) -> bool:
+    s = str(n)
+    mid = len(s)//2
+    if len(s) %2 != 0:
+        return False
+    elif s[:mid] == s[mid:]:
+        return True
+    return False
             
 
 if __name__ == "__main__":
     input = getinput("input.txt")
     data = parse_ranges(input)
+    invalids = []
+
+    for num in iter_nums(data):
+        if is_invalid(num):
+            invalids.append(num)
+
+    print(sum(invalids))
+
 
 
 
